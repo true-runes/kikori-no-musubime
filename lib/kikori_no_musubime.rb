@@ -18,8 +18,22 @@ class KikoriNoMusubime
     rand(1..6)
   end
 
+  def forward_steps(dice_number:)
+    return nil if dice_number == 1 # TODO: 臭う
+
+    dice_number
+  end
+
+  def go_forward(dice_number:)
+    if dice_number == 1
+      @current_position = 0
+    else
+      @current_position += forward_steps(dice_number: dice_number)
+    end
+  end
+
   # 以降は純粋な計算部分なのでクラスの趣旨からはズレる
-  def dicer_permutation_array(base_array)
+  def dice_permutation_array(base_array)
     result_array = []
 
     base_array.each do |array|
@@ -38,7 +52,7 @@ class KikoriNoMusubime
     permutation = INIT_PERMUTATION
 
     (number_of_trials - 1).times do
-      permutation = dicer_permutation_array(permutation)
+      permutation = dice_permutation_array(permutation)
     end
 
     permutation
