@@ -1,13 +1,15 @@
 class KikoriNoMusubime
-  attr_accessor :dice_number, :current_position, :current_turn
+  attr_accessor :dice_number, :current_position, :current_turn, :goal_position
 
   DICE_VALUE_LANGE = (1..6).freeze
   INIT_PERMUTATION = [[1], [2], [3], [4], [5], [6]].freeze
+  GOAL_POSITION    = 27
 
-  def initialize
+  def initialize(goal_position: GOAL_POSITION)
     @dice_number      = 0
     @current_position = 0
     @current_turn     = 0
+    @goal_position    = goal_position
   end
 
   def throw_dice
@@ -33,7 +35,7 @@ class KikoriNoMusubime
   end
 
   # 以降は純粋な計算部分なのでクラスの趣旨からはズレる
-  def dice_permutation_array(base_array)
+  def dice_permutations_array(base_array)
     result_array = []
 
     base_array.each do |array|
@@ -48,11 +50,11 @@ class KikoriNoMusubime
     result_array
   end
 
-  def dice_permutation(number_of_trials:)
+  def dice_permutations(number_of_trials:)
     permutation = INIT_PERMUTATION
 
     (number_of_trials - 1).times do
-      permutation = dice_permutation_array(permutation)
+      permutation = dice_permutations_array(permutation)
     end
 
     permutation
